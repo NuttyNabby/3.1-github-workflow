@@ -2,7 +2,8 @@ name: Terraform Deployment
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - "main"
 
 env:
   AWS_REGION: us-east-1
@@ -10,15 +11,15 @@ env:
 jobs:
   CICD:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::255945442255:role/nabilah_ce9 # Use OIDC(open ID Connect),
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Setup Terraform
@@ -32,7 +33,3 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply --auto-approve
-
-permissions:
-  id-token: write
-  contents: read
