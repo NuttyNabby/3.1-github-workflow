@@ -1,6 +1,6 @@
 # Create AWS S3
 resource "aws_s3_bucket" "ws_bucket_github" {
-  bucket = "nabilah_ce9_github_action" 
+  bucket = "nabilah-ce9-github-action" 
 
   tags = {
     Name        = "nabilah_bucket"
